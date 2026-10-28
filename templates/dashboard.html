@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang='hi'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Jervis Flow AI - Owner Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; margin: 0; padding: 30px; }
+        .container { max-width: 850px; margin: auto; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h2 { color: #1a1a1a; border-bottom: 2px solid #25D366; padding-bottom: 12px; margin-top: 0; }
+        .card { background: #fafbfc; border: 1px solid #e1e4e8; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
+        label { display: block; margin-top: 12px; font-weight: 600; color: #333; font-size: 14px; }
+        input { width: 100%; padding: 10px 12px; margin-top: 6px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        button { background: #25D366; color: white; border: none; padding: 12px 22px; font-size: 15px; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 20px; width: 100%; }
+        button:hover { background: #1ebd5a; }
+        #qr-box { text-align: center; margin-top: 20px; }
+        #status-msg { color: #25D366; font-weight: bold; margin-top: 15px; text-align: center; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h2>?????? Jervis Flow AI - Owner Configuration Dashboard</h2>
+        
+        <div class='card'>
+            <h3>1. WhatsApp Connection (QR Code)</h3>
+            <p>Apna WhatsApp connect karne ke liye button click karein aur QR scan karein:</p>
+            <button onclick='generateQR()' style='width: auto;'>Generate WhatsApp QR Code</button>
+            <div id='qr-box'></div>
+        </div>
+
+        <div class='card'>
+            <h3>2. 20 Important Custom Questions & Answers (Owner Fill Karega)</h3>
+            <p>Yahan gym owner apni saari details khud bharega. AI inhi ke base par automatic reply dega:</p>
+            <form id='settingsForm' onsubmit='saveSettings(event)'>
+                <label>1. Gym Name:</label>
+                <input type='text' id='gym_name' value='{{ gym.gym_name }}' required>
+                
+                <label>2. Contact Number:</label>
+                <input type='text' id='contact_number' value='{{ gym.contact_number }}' required>
+                
+                <label>3. Address / Location:</label>
+                <input type='text' id='address' value='{{ gym.address }}' required>
+                
+                <label>4. Timings (Open/Close Hours):</label>
+                <input type='text' id='timings' value='{{ gym.timings }}' required>
+                
+                <label>5. Monthly Membership Fees:</label>
+                <input type='text' id='monthly_fees' value='{{ gym.monthly_fees }}' required>
+                
+                <label>6. Long-term Packages (Quarterly/Yearly):</label>
+                <input type='text' id='long_term_packages' value='{{ gym.long_term_packages }}' required>
+                
+                <label>7. Admission / Registration Fees:</label>
+                <input type='text' id='admission_fees' value='{{ gym.admission_fees }}' required>
+                
+                <label>8. Personal Trainer Charges & Availability:</label>
+                <input type='text' id='personal_trainer' value='{{ gym.personal_trainer }}' required>
+                
+                <label>9. Facilities Available (Cardio, CrossFit, etc.):</label>
+                <input type='text' id='facilities' value='{{ gym.facilities }}' required>
+                
+                <label>10. Batch Timings (Ladies/Gents):</label>
+                <input type='text' id='batch_timings' value='{{ gym.batch_timings }}' required>
+                
+                <label>11. Free Trial Rules:</label>
+                <input type='text' id='free_trial' value='{{ gym.free_trial }}' required>
+                
+                <label>12. Locker / Changing Room Facility:</label>
+                <input type='text' id='locker_facility' value='{{ gym.locker_facility }}' required>
+                
+                <label>13. Protein Bar / Supplements Available:</label>
+                <input type='text' id='protein_bar' value='{{ gym.protein_bar }}' required>
+                
+                <label>14. Parking Facility (Bike/Car):</label>
+                <input type='text' id='parking' value='{{ gym.parking }}' required>
+                
+                <label>15. Age Limit / Eligibility:</label>
+                <input type='text' id='age_limit' value='{{ gym.age_limit }}' required>
+                
+                <label>16. Special Discounts / Offers:</label>
+                <input type='text' id='offers' value='{{ gym.offers }}' required>
+                
+                <label>17. Accepted Payment Methods (UPI/Cash):</label>
+                <input type='text' id='payment_methods' value='{{ gym.payment_methods }}' required>
+                
+                <label>18. Guest Entry Rules:</label>
+                <input type='text' id='guest_entry' value='{{ gym.guest_entry }}' required>
+                
+                <label>19. Diet Plan / Workout Guidance:</label>
+                <input type='text' id='diet_plan' value='{{ gym.diet_plan }}' required>
+                
+                <label>20. Weekly Off / Holiday Details:</label>
+                <input type='text' id='weekly_off' value='{{ gym.weekly_off }}' required>
+                
+                <button type='submit'>Save All 20 Answers & Update AI Bot</button>
+            </form>
+            <p id='status-msg'></p>
+        </div>
+    </div>
+    <script>
+        async function generateQR() {
+            document.getElementById('qr-box').innerHTML = '<p>Generating QR Code...</p>';
+            let res = await fetch('/api/get-qr');
+            let data = await res.json();
+            document.getElementById('qr-box').innerHTML = '<img src=\"' + data.qr_image + '\" width=\"220\" style=\"border: 2px solid #ddd; border-radius: 8px; padding: 10px; background: white;\" /><p style=\"color: #25D366; font-weight: bold; margin-top: 8px;\">Status: Waiting for scan...</p>';
+        }
+        async function saveSettings(event) {
+            event.preventDefault();
+            let payload = {
+                gym_name: document.getElementById('gym_name').value,
+                contact_number: document.getElementById('contact_number').value,
+                address: document.getElementById('address').value,
+                timings: document.getElementById('timings').value,
+                monthly_fees: document.getElementById('monthly_fees').value,
+                long_term_packages: document.getElementById('long_term_packages').value,
+                admission_fees: document.getElementById('admission_fees').value,
+                personal_trainer: document.getElementById('personal_trainer').value,
+                facilities: document.getElementById('facilities').value,
+                batch_timings: document.getElementById('batch_timings').value,
+                free_trial: document.getElementById('free_trial').value,
+                locker_facility: document.getElementById('locker_facility').value,
+                protein_bar: document.getElementById('protein_bar').value,
+                parking: document.getElementById('parking').value,
+                age_limit: document.getElementById('age_limit').value,
+                offers: document.getElementById('offers').value,
+                payment_methods: document.getElementById('payment_methods').value,
+                guest_entry: document.getElementById('guest_entry').value,
+                diet_plan: document.getElementById('diet_plan').value,
+                weekly_off: document.getElementById('weekly_off').value
+            };
+            let res = await fetch('/api/save-settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            let data = await res.json();
+            document.getElementById('status-msg').innerText = data.message;
+        }
+    </script>
+</body>
+</html>
