@@ -137,3 +137,19 @@ async def receive_ultramsg_webhook(request: Request):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
+# Added automatically for WhatsApp QR sync
+
+from fastapi import Request
+
+@app.post("/api/set-qr")
+async def set_qr(request: Request):
+    try:
+        body = await request.json()
+        client_id = body.get("clientId") or body.get("client_id")
+        qr_code = body.get("qr")
+        print(f"[Backend Success] QR received for client: {client_id}")
+        return {"status": "success", "clientId": client_id}
+    except Exception as e:
+        print(f"[Backend Error] {str(e)}")
+        return {"status": "error", "message": str(e)}
