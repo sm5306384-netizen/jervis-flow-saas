@@ -2,6 +2,7 @@
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import os
+import re
 import uvicorn
 
 app = FastAPI()
@@ -74,7 +75,6 @@ def home():
                     const data = await res.json();
                     alert(data.message);
 
-                    // Trigger bot or fetch QR
                     pollQR(email);
                 });
 
@@ -82,7 +82,6 @@ def home():
                     const container = document.getElementById('qr-container');
                     container.innerHTML = "<h3>Generating WhatsApp QR Code... Please wait.</h3>";
                     
-                    // In real production, frontend polls /api/get-qr?email=...
                     let interval = setInterval(async () => {
                         const res = await fetch(`/api/get-qr?email=${email}`);
                         const data = await res.json();
@@ -104,8 +103,8 @@ def register_gym(data: GymSignup):
         "answers": data.answers,
         "qr_image": None
     }
-    # Automatically trigger Node.js bot for this specific gym owner in background
-    sanitized_email = data.email.replace(/[^a-zA-Z0-9_-]/g, '_')
+    # Properly sanitize email using Python re module
+    sanitized_email = re.sub(r'[^a-zA-Z0-9_-]', '_', data.email)
     os.system(f"node bot.js {data.email} &")
     return {"status": "success", "message": f"Gym {data.gym_name} registered successfully! Generating WhatsApp session..."}
 
@@ -128,7 +127,6 @@ def whatsapp_webhook(data: WebhookRequest):
     if not owner:
         return {"ai_auto_reply": "Hello! Welcome to our gym. How can we help you today?"}
     
-    # Simple AI match from owner's answers
     answers_text = "\n".join(owner["answers"])
     auto_reply = f"Thank you for contacting {owner['gym_name']}! Here is the info you requested:\n{answers_text[:200]}..."
     return {"ai_auto_reply": auto_reply}
