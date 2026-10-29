@@ -4,5 +4,5 @@
     env: docker
     plan: free
     buildCommand: ""
-    startCommand: "python main.py"
+    startCommand: "node auth-server.js"
     autoDeploy: true
