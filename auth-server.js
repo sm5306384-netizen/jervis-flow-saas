@@ -10,6 +10,7 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
+app.set('trust proxy', 1);
 const SQLiteStore = SQLiteStoreFactory(session);
 
 const PORT = Number(process.env.AUTH_PORT || process.env.PORT || 3100);
@@ -433,6 +434,7 @@ app.listen(PORT, HOST, () => {
   console.log("Sessions database:", SESSION_DB);
   console.log("Local development mode:", !isProduction);
 });
+
 
 
 
