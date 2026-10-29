@@ -1,5 +1,6 @@
 ﻿const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 
@@ -9,10 +10,16 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Ensure auth-data directory exists for SQLite session store
+const authDataDir = path.join(__dirname, "auth-data");
+if (!fs.existsSync(authDataDir)) {
+    fs.mkdirSync(authDataDir, { recursive: true });
+}
+
 const secret = process.env.AUTH_SESSION_SECRET || "jervis_super_secret_key_2026_secure_enough_length_32_chars";
 
 app.use(session({
-    store: new SQLiteStore({ db: "sessions.sqlite", dir: path.join(__dirname, "auth-data") }),
+    store: new SQLiteStore({ db: "sessions.sqlite", dir: authDataDir }),
     secret: secret,
     resave: false,
     saveUninitialized: false,
