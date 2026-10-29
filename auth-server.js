@@ -17,8 +17,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false, // set true if HTTPS
-        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production" || process.env.RENDER ? true : false,
+        sameSite: process.env.NODE_ENV === "production" || process.env.RENDER ? "none" : "lax",
         maxAge: 24 * 60 * 60 * 1000
     }
 }));
