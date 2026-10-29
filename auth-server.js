@@ -82,3 +82,15 @@ const PORT = process.env.PORT || 3100;
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+
+// Added Knowledge Base API endpoint for WhatsApp Bridge
+app.get("/api/kb", (req, res) => {
+    res.json({
+        fees: "₹1500/month, ₹4000/3 months",
+        timings: "Morning 5:00 AM - 10:00 PM",
+        trial: "1 Day Free Trial available!",
+        subscription: "UPI / Cash accepted at gym desk"
+    });
+});
+
