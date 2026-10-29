@@ -22,7 +22,7 @@ client.on('message', async (msg) => {
     if (msg.from.endsWith('@g.us')) return;
     try {
         console.log(`📩 Customer Query: ${msg.body}`);
-        const res = await axios.get('http://localhost:8000/api/kb');
+        const res = await axios.get(process.env.API_URL ? ${process.env.API_URL}/api/kb : 'http://localhost:8000/api/kb');
         const kb = res.data;
         let responseText = "Dhanyawad humse sampark karne ke liye! Gym ki details:\n\n";
         responseText += `🏋️ Fees: ${kb.fees}\n⏰ Timings: ${kb.timings}\n🎁 Trial: ${kb.trial}\n💳 Subscription: ${kb.subscription}`;
@@ -34,3 +34,4 @@ client.on('message', async (msg) => {
 });
 
 client.initialize();
+
