@@ -1,28 +1,29 @@
-﻿{
-    "name":  "jervis-flow-ai",
-    "version":  "1.0.0",
-    "description":  "",
-    "main":  "auth-server.js",
-    "scripts":  {
-                    "test":  "echo \"Error: no test specified\" \u0026\u0026 exit 1",
-                    "start":  "node auth-server.js"
-                },
-    "keywords":  [
-
-                 ],
-    "author":  "",
-    "license":  "ISC",
-    "type":  "commonjs",
-    "dependencies":  {
-                         "axios":  "^1.21.0",
-                         "bcryptjs":  "^3.0.3",
-                         "connect-sqlite3":  "^0.9.18",
-                         "express":  "^5.3.0",
-                         "express-rate-limit":  "^8.7.1",
-                         "express-session":  "^1.19.0",
-                         "helmet":  "^8.3.0",
-                         "puppeteer-core":  "^25.16.0",
-                         "qrcode":  "^1.5.4",
-                         "whatsapp-web.js":  "^1.34.7"
-                     }
+{
+    "name": "jervis-flow-ai",
+    "version": "1.0.0",
+    "description": "",
+    "main": "auth-server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node auth-server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "dependencies": {
+        "axios": "^1.21.0",
+        "bcryptjs": "^3.0.3",
+        "connect-sqlite3": "^0.9.18",
+        "express": "^5.3.0",
+        "express-rate-limit": "^8.7.1",
+        "express-session": "^1.19.0",
+        "helmet": "^8.3.0",
+        "mongodb": "^7.7.0",
+        "mongoose": "^9.11.4",
+        "puppeteer-core": "^25.16.0",
+        "qrcode": "^1.5.4",
+        "whatsapp-web.js": "^1.34.7",
+        "wwebjs-mongo": "^1.1.0"
+    }
 }
