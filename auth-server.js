@@ -22,7 +22,7 @@ const DB_PATH = path.join(DATA_DIR, "accounts.sqlite");
 const SESSION_DB = path.join(DATA_DIR, "sessions.sqlite");
 
 const isProduction = process.env.NODE_ENV === "production";
-const secret = process.env.AUTH_SESSION_SECRET || fs.readFileSync(path.join(DATA_DIR, "session-secret"), "utf8").trim();
+const secret = process.env.AUTH_SESSION_SECRET || 'jervis_super_secret_key_2026_secure', "utf8").trim();
 
 if (!secret || secret.length < 32) {
   console.error(
@@ -433,5 +433,6 @@ app.listen(PORT, HOST, () => {
   console.log("Sessions database:", SESSION_DB);
   console.log("Local development mode:", !isProduction);
 });
+
 
 
