@@ -161,8 +161,18 @@ module.exports = function createWhatsAppRouter() {
     next();
   });
 
-  router.get("/profile", (req, res) => {
+    router.get("/profile", (req, res) => {
     res.json({ ok: true, profile: readProfile(req.whatsappAccountId) });
+  });
+
+  router.post("/profile", (req, res) => {
+    try {
+      const updated = writeProfile(req.whatsappAccountId, req.body || {});
+      res.json({ ok: true, profile: updated, message: "Gym profile successfully saved!" });
+    } catch (err) {
+      console.error("Profile save error:", err);
+      res.status(500).json({ ok: false, error: "Profile save nahi ho saki." });
+    }
   });
 
   router.put("/profile", (req, res) => {
@@ -378,6 +388,9 @@ module.exports = function createWhatsAppRouter() {
 
   return router;
 };
+
+
+
 
 
 
