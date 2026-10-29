@@ -12,8 +12,8 @@ const fs = require("fs");
 const app = express();
 const SQLiteStore = SQLiteStoreFactory(session);
 
-const PORT = Number(process.env.AUTH_PORT || 3100);
-const HOST = process.env.AUTH_HOST || "127.0.0.1";
+const PORT = Number(process.env.AUTH_PORT || process.env.PORT || 3100);
+const HOST = process.env.AUTH_HOST || "0.0.0.0";
 const DATA_DIR = path.join(__dirname, "auth-data");
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -433,6 +433,7 @@ app.listen(PORT, HOST, () => {
   console.log("Sessions database:", SESSION_DB);
   console.log("Local development mode:", !isProduction);
 });
+
 
 
 
