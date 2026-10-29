@@ -1,11 +1,12 @@
 ﻿FROM node:18-slim
 
-# Install necessary system dependencies for Puppeteer & Chrome
+# Install Chromium and necessary system dependencies for Puppeteer & WhatsApp Web
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
     ca-certificates \
     procps \
+    chromium \
     libxss1 \
     libxtst6 \
     libnss3 \
@@ -24,6 +25,8 @@ RUN apt-get update && apt-get install -y \
     fonts-liberation \
     xdg-utils \
     && rm -rf /var/lib/apt/lists/*
+
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 WORKDIR /app
 
