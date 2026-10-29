@@ -10,6 +10,7 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
+app.use(express.static(__dirname));
 app.set('trust proxy', 1);
 const SQLiteStore = SQLiteStoreFactory(session);
 
@@ -442,3 +443,5 @@ app.listen(PORT, HOST, () => {
 
 
 
+
+app.get("/", (req, res) => { if (req.session && req.session.userId) { res.redirect("/dashboard.html"); } else { res.sendFile(__dirname + "/login.html"); } });
