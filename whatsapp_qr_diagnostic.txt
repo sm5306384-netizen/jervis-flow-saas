@@ -1,0 +1,392 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261029064811
+Username: SHIVA\sm530
+RunAs User: SHIVA\sm530
+Configuration Name: 
+Machine: SHIVA (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\sm530\AppData\Local\Programs\Microsoft VS Code\e646868227\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Process ID: 7472
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Users\sm530\OneDrive\jervis flow ai\whatsapp_qr_diagnostic.txt
+
+========== 1. PROJECT ==========
+
+
+
+
+========== 2. REQUIRED FILES ==========
+Path
+----
+C:\Users\sm530\OneDrive\jervis flow ai
+
+Name          : package.json
+Length        : 569
+LastWriteTime : 29-10-2026 06:16:56
+
+
+Name          : auth-server.js
+Length        : 10611
+LastWriteTime : 29-10-2026 06:26:05
+
+
+Name          : whatsapp-qr.js
+Length        : 11585
+LastWriteTime : 29-10-2026 06:33:03
+
+
+========== 3. INSTALLED DEPENDENCIES ==========
+
+
+========== 4. PORT 3100 ==========
+
+LocalAddress  : 127.0.0.1
+LocalPort     : 3100
+OwningProcess : 21024
+
+
+========== 5. SERVER PROCESS ==========
+
+ProcessId   : 21024
+CommandLine : "C:\Program Files\nodejs\node.exe" .\auth-server.js
+
+
+========== 6. ROUTES AND QR HANDLERS ==========
+
+IgnoreCase : True
+LineNumber : 82
+Line       :   session({
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 135
+Line       : function requireLogin(req, res, next) {
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 146
+Line       : function regenerateSession(req) {
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 155
+Line       : function saveSession(req) {
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 164
+Line       : function destroySession(req) {
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 271
+Line       : app.get("/dashboard", requireLogin, (req, res) => {
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 318
+Line       :     await regenerateSession(req);
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 323
+Line       :     await saveSession(req);
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 362
+Line       :     await regenerateSession(req);
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 367
+Line       :     await saveSession(req);
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 375
+Line       : app.post("/api/logout", requireLogin, async (req, res, next) => {
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 377
+Line       :     await destroySession(req);
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 391
+Line       : app.get("/api/gym-information", requireLogin, async (req, res, next) => {
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 401
+Line       : app.put("/api/gym-information", requireLogin, async (req, res, next) => {
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 428
+Line       : app.use("/api/whatsapp", require("./whatsapp-qr")());
+Filename   : auth-server.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\auth-server.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 135
+Line       :   router.get("/profile", (req, res) => {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 139
+Line       :   router.put("/profile", (req, res) => {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 144
+Line       :   router.get("/status", (req, res) => {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 156
+Line       :   router.post("/connect", async (req, res) => {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 183
+Line       :         puppeteer: {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 184
+Line       :           executablePath: path.join(
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 187
+Line       :             "puppeteer",
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 202
+Line       :       client.on("qr", async (qr) => {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 204
+Line       :           const qrData = await QRCode.toDataURL(qr, {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 285
+Line       :       client.initialize().catch((err) => {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+IgnoreCase : True
+LineNumber : 316
+Line       :   router.post("/disconnect", async (req, res) => {
+Filename   : whatsapp-qr.js
+Path       : C:\Users\sm530\OneDrive\jervis flow ai\whatsapp-qr.js
+Pattern    : session\(|app\.use\("/api/whatsapp"|router\.(get|post|put)|client\.on\("qr"|clie
+             nt\.initialize|QRCode\.toDataURL|puppeteer|executablePath|requireLogin|isAuthent
+             icated
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+Matches    : {0}
+
+
+========== 7. RECENT ERROR LOGS ==========
+
+Name          : whatsapp_qr_diagnostic.txt
+Length        : 1649
+LastWriteTime : 29-10-2026 06:48:13
+
+
+Name          : puppeteer-install-error.txt
+Length        : 9746
+LastWriteTime : 29-10-2026 06:30:55
+
+
+========== REPORT COMPLETE ==========
+**********************
+Windows PowerShell transcript end
+End time: 20261029064813
+**********************

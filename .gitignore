@@ -3,3 +3,4 @@ __pycache__/
 .wwebjs_auth/
 .env
 *.db
+auth-data/

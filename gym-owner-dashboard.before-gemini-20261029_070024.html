@@ -1,0 +1,548 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym Owner Dashboard</title>
+<style>
+:root {
+  --bg:#080d18; --panel:#111a2b; --border:#26334a;
+  --text:#f1f5f9; --muted:#94a3b8; --accent:#38bdf8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+header {
+  padding:24px 5%; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+  gap:16px; flex-wrap:wrap;
+}
+.brand { font-size:21px; font-weight:800; }
+.brand span { color:var(--accent); }
+.badge {
+  color:#86efac; background:#123026; padding:8px 12px;
+  border-radius:20px; font-size:12px;
+}
+main { max-width:1100px; margin:35px auto; padding:0 20px 50px; }
+h1 { font-size:32px; margin-bottom:8px; }
+.subtitle { color:var(--muted); line-height:1.6; }
+.notice {
+  padding:15px; margin:24px 0; border:1px solid #075985;
+  background:#082438; border-radius:12px; line-height:1.6;
+  color:#bae6fd; font-size:14px;
+}
+.progress-box {
+  background:var(--panel); border:1px solid var(--border);
+  padding:18px; border-radius:14px; margin-bottom:24px;
+}
+.progress-track {
+  height:7px; background:#26334a; border-radius:8px;
+  margin-top:12px; overflow:hidden;
+}
+#progress { height:100%; width:0%; background:var(--accent); }
+section {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:24px; margin-bottom:22px;
+}
+section h2 { font-size:19px; margin:0 0 8px; }
+.section-desc { color:var(--muted); font-size:13px; margin-bottom:22px; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.field { min-width:0; }
+.field.full { grid-column:1/-1; }
+label { display:block; font-size:14px; font-weight:600; margin-bottom:9px; }
+input,textarea,select {
+  width:100%; padding:12px 13px; border-radius:9px;
+  border:1px solid var(--border); background:#0b1220;
+  color:var(--text); font:inherit; outline:none;
+}
+input:focus,textarea:focus,select:focus { border-color:var(--accent); }
+textarea { min-height:90px; resize:vertical; }
+.hint { font-size:12px; color:var(--muted); margin-top:7px; line-height:1.5; }
+.actions {
+  position:sticky; bottom:0; background:#080d18ee;
+  border-top:1px solid var(--border); padding:16px 5%;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; flex-wrap:wrap; backdrop-filter:blur(12px);
+}
+button {
+  border:0; border-radius:9px; padding:12px 18px;
+  font-weight:700; cursor:pointer; font-size:14px;
+}
+.primary { background:var(--accent); color:#082033; }
+.secondary { background:#26334a; color:var(--text); }
+#status { color:#86efac; font-size:13px; }
+footer { text-align:center; padding:20px; color:var(--muted); font-size:12px; }
+@media(max-width:650px) {
+  .grid { grid-template-columns:1fr; }
+  .field.full { grid-column:auto; }
+  h1 { font-size:26px; }
+  section { padding:18px; }
+}
+
+/* WhatsApp connection panel */
+.whatsapp-card {
+  background:linear-gradient(135deg,#102b27,#111a2b 70%);
+  border:1px solid #246b55;border-radius:16px;padding:24px;margin:24px 0;
+}
+.whatsapp-card h2 { margin:0 0 8px;font-size:21px; }
+.whatsapp-card p { color:#cbd5e1;line-height:1.6; }
+.whatsapp-row { display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px; }
+.whatsapp-state { color:#86efac;font-size:14px; }
+.whatsapp-qr-box { margin-top:18px;display:none; }
+.whatsapp-qr-box img { width:320px;max-width:100%;background:#fff;padding:10px;border-radius:12px; }
+.whatsapp-small { color:#94a3b8;font-size:12px;line-height:1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">GYM<span>ASSIST</span> <span style="color:#f1f5f9">/ Owner</span></div>
+  <div class="badge">● Gym Profile Settings</div>
+  <button class="secondary" type="button" id="logoutBtn" style="margin-left:auto">Logout</button>
+</header>
+
+<main>
+  <h1>Gym Knowledge Dashboard</h1>
+  <p class="subtitle">
+    Apne gym ki sahi information fill karein. Ye details future mein
+    aapke WhatsApp AI assistant ko customer questions ka jawab dene mein help karengi.
+  </p>
+
+  <div class="notice"><strong>Account protected:</strong> Gym information is saved to your account on the server. Har gym owner ka data alag hai. Changes save karne ke liye Save Gym Information dabayein.</div>
+
+    <section class="whatsapp-card" id="whatsappPanel">
+    <h2>📱 Connect WhatsApp</h2>
+    <p>Apne gym ka WhatsApp connect karein. Connect hone ke baad customer messages ka jawab saved Gym Profile ke according diya jayega.</p>
+    <div class="whatsapp-row">
+      <button class="primary" type="button" id="whatsappConnectBtn">Connect WhatsApp</button>
+      <button class="secondary" type="button" id="whatsappDisconnectBtn">Disconnect</button>
+      <span class="whatsapp-state" id="whatsappStatus">Connection status check ho raha hai...</span>
+    </div>
+    <div class="whatsapp-qr-box" id="whatsappQrBox">
+      <p><strong>WhatsApp QR code</strong></p>
+      <p>Phone mein WhatsApp → Linked Devices → Link a Device kholo aur QR scan karo.</p>
+      <img id="whatsappQr" alt="WhatsApp connection QR code">
+      <p class="whatsapp-small">QR kisi aur ke saath share mat karein. Ye aapke WhatsApp account ko link kar sakta hai.</p>
+    </div>
+  </section>
+
+  <div class="progress-box">
+    <strong>Profile completion: <span id="count">0/20</span></strong>
+    <div class="progress-track"><div id="progress"></div></div>
+    <div class="hint">Jin questions ke answers fill honge, unki progress yahan dikhegi.</div>
+  </div>
+
+  <form id="gymForm">
+
+    <section>
+      <h2>01. Gym Information</h2>
+      <p class="section-desc">Customers ko gym ki identity aur location batane ke liye.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="q1">1. Gym ka naam *</label>
+          <input id="q1" required placeholder="Apne gym ka naam">
+        </div>
+        <div class="field">
+          <label for="q2">2. Complete address *</label>
+          <textarea id="q2" required placeholder="Address, area, city"></textarea>
+        </div>
+        <div class="field">
+          <label for="q3">3. Opening aur closing timings *</label>
+          <input id="q3" required placeholder="Jaise 6 AM - 10 PM">
+        </div>
+        <div class="field">
+          <label for="q4">4. Weekly schedule aur holidays *</label>
+          <textarea id="q4" required placeholder="Kaunse din open/closed?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>02. Membership & Pricing</h2>
+      <p class="section-desc">AI ko membership aur charges ke baare mein accurate information dene ke liye.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="q5">5. Monthly membership fee *</label>
+          <input id="q5" required placeholder="Amount in INR">
+        </div>
+        <div class="field">
+          <label for="q6">6. Three-month membership fee</label>
+          <input id="q6" placeholder="Amount or Not available">
+        </div>
+        <div class="field">
+          <label for="q7">7. Six-month membership fee</label>
+          <input id="q7" placeholder="Amount or Not available">
+        </div>
+        <div class="field">
+          <label for="q8">8. Annual membership fee</label>
+          <input id="q8" placeholder="Amount or Not available">
+        </div>
+        <div class="field">
+          <label for="q9">9. Trial workout available hai?</label>
+          <textarea id="q9" placeholder="Yes/no, duration, charges aur conditions"></textarea>
+        </div>
+        <div class="field">
+          <label for="q10">10. Joining aur registration charges</label>
+          <textarea id="q10" placeholder="Actual charges aur applicable conditions"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>03. Facilities & Training</h2>
+      <p class="section-desc">Gym mein available services ke baare mein.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="q11">11. Available gym equipment aur facilities</label>
+          <textarea id="q11" placeholder="Cardio, weights, changing room etc."></textarea>
+        </div>
+        <div class="field">
+          <label for="q12">12. Ladies facilities aur timings</label>
+          <textarea id="q12" placeholder="Actual availability aur timings"></textarea>
+        </div>
+        <div class="field">
+          <label for="q13">13. Personal training available hai?</label>
+          <textarea id="q13" placeholder="Availability, charges aur session details"></textarea>
+        </div>
+        <div class="field">
+          <label for="q14">14. Diet consultation available hai?</label>
+          <textarea id="q14" placeholder="Availability, scope aur charges"></textarea>
+        </div>
+        <div class="field">
+          <label for="q15">15. Weight-loss training programme</label>
+          <textarea id="q15" placeholder="Programme details, duration aur charges"></textarea>
+        </div>
+        <div class="field">
+          <label for="q16">16. Muscle-gain training programme</label>
+          <textarea id="q16" placeholder="Programme details, duration aur charges"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>04. Payments & Policies</h2>
+      <p class="section-desc">Payments aur membership rules ke baare mein.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="q17">17. Accepted payment methods</label>
+          <textarea id="q17" placeholder="UPI, cash, card etc."></textarea>
+        </div>
+        <div class="field">
+          <label for="q18">18. Cancellation aur refund policy</label>
+          <textarea id="q18" placeholder="Actual written policy"></textarea>
+        </div>
+        <div class="field">
+          <label for="q19">19. Membership pause/freeze policy</label>
+          <textarea id="q19" placeholder="Rules, duration aur charges"></textarea>
+        </div>
+        <div class="field">
+          <label for="q20">20. Contact details aur common customer FAQs</label>
+          <textarea id="q20" placeholder="Official contact, parking, age rules, other FAQs"></textarea>
+        </div>
+      </div>
+    </section>
+
+  </form>
+</main>
+
+<div class="actions">
+  <span id="status" role="status">Changes abhi save nahi hue.</span>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="secondary" type="button" id="resetBtn">Clear Form</button>
+    <button class="primary" type="button" id="saveBtn">Save Gym Information</button>
+  </div>
+</div>
+
+<footer>GymAssist · Gym Owner Knowledge Settings · Prototype</footer>
+
+
+<script>
+(function () {
+  const form = document.getElementById("gymForm");
+  const fields = Array.from(form.querySelectorAll("input, textarea, select"));
+  const status = document.getElementById("status");
+  const saveButton = document.getElementById("saveBtn");
+  const resetButton = document.getElementById("resetBtn");
+  const logoutButton = document.getElementById("logoutBtn");
+
+  let loading = false;
+  let saving = false;
+
+  function updateProgress() {
+    const filled = fields.filter(el => el.value.trim() !== "").length;
+    document.getElementById("count").textContent = filled + "/20";
+    document.getElementById("progress").style.width =
+      (filled / fields.length * 100) + "%";
+  }
+
+  function collectData() {
+    const data = {};
+    fields.forEach(el => {
+      data[el.id] = el.value.trim();
+    });
+    return data;
+  }
+
+  function showError(message) {
+    status.textContent = message;
+    status.style.color = "#fca5a5";
+  }
+
+  function showSuccess(message) {
+    status.textContent = message;
+    status.style.color = "#86efac";
+  }
+
+  async function api(url, options) {
+    const response = await fetch(url, Object.assign({
+      credentials: "same-origin",
+      cache: "no-store"
+    }, options || {}));
+
+    if (response.status === 401) {
+      location.replace("/");
+      throw new Error("Session expire ho gaya. Dobara login karo.");
+    }
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.error || "Request complete nahi hui.");
+    }
+
+    return result;
+  }
+
+  async function loadData() {
+    loading = true;
+    saveButton.disabled = true;
+    resetButton.disabled = true;
+    logoutButton.disabled = true;
+    status.textContent = "Account information load ho rahi hai...";
+
+    try {
+      const data = await api("/api/gym-information");
+
+      fields.forEach(el => {
+        el.value = typeof data[el.id] === "string" ? data[el.id] : "";
+      });
+
+      showSuccess("Account ki saved gym information load ho gayi.");
+    } catch (error) {
+      showError(error.message || "Information load nahi ho saki.");
+    } finally {
+      loading = false;
+      saveButton.disabled = false;
+      resetButton.disabled = false;
+      logoutButton.disabled = false;
+      updateProgress();
+    }
+  }
+
+  saveButton.addEventListener("click", async function () {
+    if (loading || saving || !form.reportValidity()) return;
+
+    saving = true;
+    saveButton.disabled = true;
+    status.textContent = "Server par save ho raha hai...";
+
+    try {
+      await api("/api/gym-information", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(collectData())
+      });
+
+      showSuccess("Gym information account mein successfully save ho gayi.");
+    } catch (error) {
+      showError(error.message || "Save failed. Dobara try karo.");
+    } finally {
+      saving = false;
+      saveButton.disabled = false;
+      updateProgress();
+    }
+  });
+
+  resetButton.addEventListener("click", async function () {
+    if (loading || saving) return;
+
+    if (!confirm("Is account ki saved gym information delete karke form clear karna hai?")) {
+      return;
+    }
+
+    saving = true;
+    resetButton.disabled = true;
+    saveButton.disabled = true;
+
+    try {
+      await api("/api/gym-information", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({})
+      });
+
+      form.reset();
+      showSuccess("Is account ki gym information clear ho gayi.");
+    } catch (error) {
+      showError(error.message || "Information clear nahi ho saki.");
+    } finally {
+      saving = false;
+      resetButton.disabled = false;
+      saveButton.disabled = false;
+      updateProgress();
+    }
+  });
+
+  logoutButton.addEventListener("click", async function () {
+    if (saving || loading) return;
+    if (!confirm("Logout karna hai?")) return;
+
+    logoutButton.disabled = true;
+
+    try {
+      await api("/api/logout", { method: "POST" });
+      location.replace("/");
+    } catch (error) {
+      showError(error.message || "Logout nahi ho saka.");
+      logoutButton.disabled = false;
+    }
+  });
+
+  fields.forEach(el => el.addEventListener("input", function () {
+    if (!loading) {
+      status.textContent = "Unsaved changes — Save Gym Information dabayein.";
+      status.style.color = "#facc15";
+      updateProgress();
+    }
+  }));
+
+  loadData();
+})();
+</script>
+<script>
+(function () {
+  const connectBtn = document.getElementById("whatsappConnectBtn");
+  const disconnectBtn = document.getElementById("whatsappDisconnectBtn");
+  const statusEl = document.getElementById("whatsappStatus");
+  const qrBox = document.getElementById("whatsappQrBox");
+  const qrImg = document.getElementById("whatsappQr");
+  const saveBtn = document.getElementById("saveBtn");
+  let pollTimer = null;
+
+  async function api(url, options = {}) {
+    const response = await fetch(url, {
+      credentials: "same-origin",
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers || {})
+      }
+    });
+    const data = await response.json().catch(() => ({}));
+    if (response.status === 401) {
+      location.replace("/");
+      throw new Error("Session expire ho gaya. Dobara login karein.");
+    }
+    if (!response.ok || data.ok === false) {
+      throw new Error(data.error || "Request fail ho gayi.");
+    }
+    return data;
+  }
+
+  function getProfileFromForm() {
+    const data = {};
+    for (let i = 1; i <= 20; i++) {
+      const field = document.getElementById("q" + i);
+      data["q" + i] = field ? field.value.trim() : "";
+    }
+    return data;
+  }
+
+  async function syncProfile() {
+    await api("/api/whatsapp/profile", {
+      method: "PUT",
+      body: JSON.stringify(getProfileFromForm())
+    });
+  }
+
+  async function refreshStatus() {
+    try {
+      const data = await api("/api/whatsapp/status");
+      statusEl.textContent = data.message || data.state || "Status unknown";
+
+      if (data.connected) {
+        statusEl.textContent = "✅ WhatsApp Connected" + (data.phone ? " · " + data.phone : "");
+        qrBox.style.display = "none";
+        qrImg.removeAttribute("src");
+        connectBtn.disabled = true;
+        disconnectBtn.disabled = false;
+      } else {
+        connectBtn.disabled = false;
+        disconnectBtn.disabled = false;
+
+        if (data.qr) {
+          qrImg.src = data.qr;
+          qrBox.style.display = "block";
+          statusEl.textContent = "📷 QR scan karein — WhatsApp connect hone ka wait hai.";
+        } else {
+          qrBox.style.display = "none";
+          qrImg.removeAttribute("src");
+        }
+      }
+    } catch (error) {
+      statusEl.textContent = error.message || "WhatsApp status load nahi ho saka.";
+    }
+  }
+
+  connectBtn.addEventListener("click", async function () {
+    connectBtn.disabled = true;
+    statusEl.textContent = "WhatsApp connection start ho raha hai...";
+    try {
+      await syncProfile();
+      await api("/api/whatsapp/connect", { method: "POST", body: "{}" });
+      await refreshStatus();
+
+      if (pollTimer) clearInterval(pollTimer);
+      pollTimer = setInterval(refreshStatus, 2000);
+    } catch (error) {
+      statusEl.textContent = error.message || "Connection start nahi ho saka.";
+      connectBtn.disabled = false;
+    }
+  });
+
+  disconnectBtn.addEventListener("click", async function () {
+    if (!confirm("Is account ka WhatsApp disconnect karna hai?")) return;
+    disconnectBtn.disabled = true;
+    statusEl.textContent = "Disconnect ho raha hai...";
+    try {
+      await api("/api/whatsapp/disconnect", { method: "POST", body: "{}" });
+      if (pollTimer) clearInterval(pollTimer);
+      await refreshStatus();
+    } catch (error) {
+      statusEl.textContent = error.message || "Disconnect fail hua.";
+    } finally {
+      disconnectBtn.disabled = false;
+    }
+  });
+
+  // Save Gym Information par WhatsApp reply profile bhi update hogi.
+  saveBtn.addEventListener("click", async function () {
+    const form = document.getElementById("gymForm");
+    if (form && !form.reportValidity()) return;
+
+    try {
+      await syncProfile();
+      statusEl.textContent = "Gym profile WhatsApp replies ke liye sync ho gayi.";
+    } catch (error) {
+      statusEl.textContent = "WhatsApp profile sync nahi hui: " + (error.message || "");
+    }
+  });
+
+  refreshStatus();
+})();
+</script>
+</body>
+</html>
+

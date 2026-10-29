@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d18">
+  <title>GymAssist — Create Account</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      padding: 20px; background: #090d18; color: #edf2ff;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+    }
+    .card {
+      width: 100%; max-width: 440px; padding: 32px;
+      border: 1px solid #27334c; border-radius: 22px;
+      background: #111827; box-shadow: 0 24px 70px #0006;
+    }
+    .logo {
+      width: 48px; height: 48px; display: grid; place-items: center;
+      border-radius: 15px; background: #183b61; color: #7dd3fc;
+      font-weight: 800; font-size: 22px;
+    }
+    h1 { margin: 22px 0 8px; font-size: 27px; }
+    .muted { color: #9caac1; line-height: 1.6; font-size: 14px; }
+    label { display: block; margin: 20px 0 8px; font-size: 13px; }
+    input {
+      width: 100%; padding: 13px 14px; border-radius: 10px;
+      border: 1px solid #34435c; background: #0b1220;
+      color: #fff; font-size: 15px; outline: none;
+    }
+    input:focus { border-color: #38bdf8; }
+    button {
+      width: 100%; margin-top: 24px; padding: 14px; border: 0;
+      border-radius: 10px; background: #38bdf8; color: #07111f;
+      font-size: 15px; font-weight: 750; cursor: pointer;
+    }
+    button:disabled { opacity: .6; cursor: wait; }
+    .message { margin-top: 15px; min-height: 20px; color: #fca5a5; font-size: 13px; }
+    .bottom { margin-top: 22px; text-align: center; font-size: 14px; color: #9caac1; }
+    a { color: #7dd3fc; }
+    .hint { margin-top: 8px; color: #9caac1; font-size: 12px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="logo">G</div>
+    <h1>Create your account</h1>
+    <p class="muted">Account banao aur apne gym ki information dashboard mein manage karo.</p>
+
+    <form id="signupForm">
+      <label for="phone">Phone number (country code ke saath)</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel"
+             placeholder="+919876543210" required maxlength="20">
+
+      <label for="password">Create password</label>
+      <input id="password" name="password" type="password"
+             autocomplete="new-password" required minlength="12" maxlength="72">
+      <div class="hint">Password 12–72 characters ka rakho. Apna unique password use karo.</div>
+
+      <label for="confirmPassword">Confirm password</label>
+      <input id="confirmPassword" name="confirmPassword" type="password"
+             autocomplete="new-password" required minlength="12" maxlength="72">
+
+      <button id="submitBtn" type="submit">Create Account</button>
+      <div class="message" id="message" role="alert"></div>
+    </form>
+
+    <div class="bottom">Already registered? <a href="/">Login</a></div>
+  </main>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const button = document.getElementById("submitBtn");
+    const message = document.getElementById("message");
+
+    fetch("/api/me", { credentials: "same-origin" })
+      .then(r => r.json())
+      .then(data => {
+        if (data.loggedIn) location.replace("/dashboard");
+      })
+      .catch(() => {});
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      message.textContent = "";
+
+      if (form.password.value !== form.confirmPassword.value) {
+        message.textContent = "Dono passwords match nahi karte.";
+        return;
+      }
+
+      button.disabled = true;
+
+      try {
+        const response = await fetch("/api/signup", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            phone: form.phone.value,
+            password: form.password.value
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.error || "Signup failed.");
+
+        location.replace(data.redirect || "/dashboard");
+      } catch (error) {
+        message.textContent = error.message || "Server se connect nahi ho saka.";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

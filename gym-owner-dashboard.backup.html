@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym Owner Dashboard</title>
+<style>
+:root {
+  --bg:#080d18; --panel:#111a2b; --border:#26334a;
+  --text:#f1f5f9; --muted:#94a3b8; --accent:#38bdf8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+header {
+  padding:24px 5%; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+  gap:16px; flex-wrap:wrap;
+}
+.brand { font-size:21px; font-weight:800; }
+.brand span { color:var(--accent); }
+.badge {
+  color:#86efac; background:#123026; padding:8px 12px;
+  border-radius:20px; font-size:12px;
+}
+main { max-width:1100px; margin:35px auto; padding:0 20px 50px; }
+h1 { font-size:32px; margin-bottom:8px; }
+.subtitle { color:var(--muted); line-height:1.6; }
+.notice {
+  padding:15px; margin:24px 0; border:1px solid #075985;
+  background:#082438; border-radius:12px; line-height:1.6;
+  color:#bae6fd; font-size:14px;
+}
+.progress-box {
+  background:var(--panel); border:1px solid var(--border);
+  padding:18px; border-radius:14px; margin-bottom:24px;
+}
+.progress-track {
+  height:7px; background:#26334a; border-radius:8px;
+  margin-top:12px; overflow:hidden;
+}
+#progress { height:100%; width:0%; background:var(--accent); }
+section {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:24px; margin-bottom:22px;
+}
+section h2 { font-size:19px; margin:0 0 8px; }
+.section-desc { color:var(--muted); font-size:13px; margin-bottom:22px; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.field { min-width:0; }
+.field.full { grid-column:1/-1; }
+label { display:block; font-size:14px; font-weight:600; margin-bottom:9px; }
+input,textarea,select {
+  width:100%; padding:12px 13px; border-radius:9px;
+  border:1px solid var(--border); background:#0b1220;
+  color:var(--text); font:inherit; outline:none;
+}
+input:focus,textarea:focus,select:focus { border-color:var(--accent); }
+textarea { min-height:90px; resize:vertical; }
+.hint { font-size:12px; color:var(--muted); margin-top:7px; line-height:1.5; }
+.actions {
+  position:sticky; bottom:0; background:#080d18ee;
+  border-top:1px solid var(--border); padding:16px 5%;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; flex-wrap:wrap; backdrop-filter:blur(12px);
+}
+button {
+  border:0; border-radius:9px; padding:12px 18px;
+  font-weight:700; cursor:pointer; font-size:14px;
+}
+.primary { background:var(--accent); color:#082033; }
+.secondary { background:#26334a; color:var(--text); }
+#status { color:#86efac; font-size:13px; }
+footer { text-align:center; padding:20px; color:var(--muted); font-size:12px; }
+@media(max-width:650px) {
+  .grid { grid-template-columns:1fr; }
+  .field.full { grid-column:auto; }
+  h1 { font-size:26px; }
+  section { padding:18px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">GYM<span>ASSIST</span> <span style="color:#f1f5f9">/ Owner</span></div>
+  <div class="badge">● Gym Profile Settings</div>
+</header>
+
+<main>
+  <h1>Gym Knowledge Dashboard</h1>
+  <p class="subtitle">
+    Apne gym ki sahi information fill karein. Ye details future mein
+    aapke WhatsApp AI assistant ko customer questions ka jawab dene mein help karengi.
+  </p>
+
+  <div class="notice">
+    <strong>Important:</strong> Apni actual fees, timings aur policies hi enter karein.
+    Abhi ye dashboard ek standalone prototype hai. Answers is browser mein save honge;
+    ye abhi aapke server, database ya WhatsApp AI se connected nahi hai.
+  </div>
+
+  <div class="progress-box">
+    <strong>Profile completion: <span id="count">0/20</span></strong>
+    <div class="progress-track"><div id="progress"></div></div>
+    <div class="hint">Jin questions ke answers fill honge, unki progress yahan dikhegi.</div>
+  </div>
+
+  <form id="gymForm">
+
+    <section>
+      <h2>01. Gym Information</h2>
+      <p class="section-desc">Customers ko gym ki identity aur location batane ke liye.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="q1">1. Gym ka naam *</label>
+          <input id="q1" required placeholder="Apne gym ka naam">
+        </div>
+        <div class="field">
+          <label for="q2">2. Complete address *</label>
+          <textarea id="q2" required placeholder="Address, area, city"></textarea>
+        </div>
+        <div class="field">
+          <label for="q3">3. Opening aur closing timings *</label>
+          <input id="q3" required placeholder="Jaise 6 AM - 10 PM">
+        </div>
+        <div class="field">
+          <label for="q4">4. Weekly schedule aur holidays *</label>
+          <textarea id="q4" required placeholder="Kaunse din open/closed?"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>02. Membership & Pricing</h2>
+      <p class="section-desc">AI ko membership aur charges ke baare mein accurate information dene ke liye.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="q5">5. Monthly membership fee *</label>
+          <input id="q5" required placeholder="Amount in INR">
+        </div>
+        <div class="field">
+          <label for="q6">6. Three-month membership fee</label>
+          <input id="q6" placeholder="Amount or Not available">
+        </div>
+        <div class="field">
+          <label for="q7">7. Six-month membership fee</label>
+          <input id="q7" placeholder="Amount or Not available">
+        </div>
+        <div class="field">
+          <label for="q8">8. Annual membership fee</label>
+          <input id="q8" placeholder="Amount or Not available">
+        </div>
+        <div class="field">
+          <label for="q9">9. Trial workout available hai?</label>
+          <textarea id="q9" placeholder="Yes/no, duration, charges aur conditions"></textarea>
+        </div>
+        <div class="field">
+          <label for="q10">10. Joining aur registration charges</label>
+          <textarea id="q10" placeholder="Actual charges aur applicable conditions"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>03. Facilities & Training</h2>
+      <p class="section-desc">Gym mein available services ke baare mein.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="q11">11. Available gym equipment aur facilities</label>
+          <textarea id="q11" placeholder="Cardio, weights, changing room etc."></textarea>
+        </div>
+        <div class="field">
+          <label for="q12">12. Ladies facilities aur timings</label>
+          <textarea id="q12" placeholder="Actual availability aur timings"></textarea>
+        </div>
+        <div class="field">
+          <label for="q13">13. Personal training available hai?</label>
+          <textarea id="q13" placeholder="Availability, charges aur session details"></textarea>
+        </div>
+        <div class="field">
+          <label for="q14">14. Diet consultation available hai?</label>
+          <textarea id="q14" placeholder="Availability, scope aur charges"></textarea>
+        </div>
+        <div class="field">
+          <label for="q15">15. Weight-loss training programme</label>
+          <textarea id="q15" placeholder="Programme details, duration aur charges"></textarea>
+        </div>
+        <div class="field">
+          <label for="q16">16. Muscle-gain training programme</label>
+          <textarea id="q16" placeholder="Programme details, duration aur charges"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>04. Payments & Policies</h2>
+      <p class="section-desc">Payments aur membership rules ke baare mein.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="q17">17. Accepted payment methods</label>
+          <textarea id="q17" placeholder="UPI, cash, card etc."></textarea>
+        </div>
+        <div class="field">
+          <label for="q18">18. Cancellation aur refund policy</label>
+          <textarea id="q18" placeholder="Actual written policy"></textarea>
+        </div>
+        <div class="field">
+          <label for="q19">19. Membership pause/freeze policy</label>
+          <textarea id="q19" placeholder="Rules, duration aur charges"></textarea>
+        </div>
+        <div class="field">
+          <label for="q20">20. Contact details aur common customer FAQs</label>
+          <textarea id="q20" placeholder="Official contact, parking, age rules, other FAQs"></textarea>
+        </div>
+      </div>
+    </section>
+
+  </form>
+</main>
+
+<div class="actions">
+  <span id="status" role="status">Changes abhi save nahi hue.</span>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="secondary" type="button" id="resetBtn">Clear Form</button>
+    <button class="primary" type="button" id="saveBtn">Save Gym Information</button>
+  </div>
+</div>
+
+<footer>GymAssist · Gym Owner Knowledge Settings · Prototype</footer>
+
+<script>
+(function () {
+  const STORAGE_KEY = "gym_owner_knowledge_prototype_v1";
+  const form = document.getElementById("gymForm");
+  const fields = Array.from(form.querySelectorAll("input, textarea, select"));
+  const status = document.getElementById("status");
+
+  function updateProgress() {
+    const filled = fields.filter(el => el.value.trim() !== "").length;
+    document.getElementById("count").textContent = filled + "/20";
+    document.getElementById("progress").style.width =
+      (filled / fields.length * 100) + "%";
+  }
+
+  function loadData() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      fields.forEach(el => {
+        if (typeof data[el.id] === "string") el.value = data[el.id];
+      });
+      status.textContent = "Saved browser data load ho gaya.";
+    } catch (err) {
+      status.textContent = "Saved data load nahi ho saka.";
+    }
+    updateProgress();
+  }
+
+  document.getElementById("saveBtn").addEventListener("click", function () {
+    if (!form.reportValidity()) return;
+    const data = {};
+    fields.forEach(el => data[el.id] = el.value.trim());
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      status.textContent = "Information is browser mein save ho gayi.";
+    } catch (err) {
+      status.textContent = "Save failed. Browser storage check karein.";
+    }
+    updateProgress();
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    if (!confirm("Form clear karna hai? Saved browser information bhi delete hogi.")) return;
+    localStorage.removeItem(STORAGE_KEY);
+    form.reset();
+    status.textContent = "Form aur browser ki saved information clear ho gayi.";
+    updateProgress();
+  });
+
+  fields.forEach(el => el.addEventListener("input", function () {
+    status.textContent = "Unsaved changes";
+    updateProgress();
+  }));
+
+  loadData();
+})();
+</script>
+</body>
+</html>
